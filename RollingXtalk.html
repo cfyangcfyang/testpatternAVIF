@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>圖片輪播</title>
+    <style>
+        /* 讓圖片填滿整個螢幕，並將背景設為黑色 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #000;
+        }
+        img {
+            /* 讓圖片保持長寬比填滿畫面 (多餘部分會被裁剪) */
+            width: 100vw;  /* 100% 視窗寬度 */
+            height: 100vh; /* 100% 視窗高度 */
+            object-fit: cover;
+            /* 讓滑鼠在圖片上顯示為可點擊的手指圖示 */
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <img id="rolling-image" src="" alt="輪播圖片">
+
+    <script>
+        // 要輪播的圖片列表
+        const rollingImages = ['XtalkB.png', 'XtalkW.png'];
+        let currentImageIndex = 0;
+
+        const imageElement = document.getElementById('rolling-image');
+
+        // 頁面載入時，執行初始化
+        function initialize() {
+            // 顯示第一張圖片
+            imageElement.src = rollingImages[currentImageIndex];
+
+            // 觸發全螢幕
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) { /* Safari */
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { /* IE11 */
+                elem.msRequestFullscreen();
+            }
+        }
+
+        // 每次點擊或按鍵時觸發的事件
+        function nextImage() {
+            currentImageIndex++; // 指向下一個索引
+
+            if (currentImageIndex < rollingImages.length) {
+                // 如果還有下一張圖片，就更新圖片來源
+                imageElement.src = rollingImages[currentImageIndex];
+            } else {
+                // 如果已經是最後一張，就跳轉到 Crosstalk.html
+                window.location.href = 'Crosstalk.html';
+            }
+        }
+
+        // 頁面載入完成後，執行初始化
+        document.addEventListener('DOMContentLoaded', initialize);
+
+        // 監聽滑鼠點擊事件
+        document.body.addEventListener('click', nextImage);
+        
+        // 監聽鍵盤事件，按任意鍵也觸發相同行為
+        document.addEventListener('keydown', nextImage);
+    </script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResponseTime</title>
+    <style>
+        /* 讓圖片填滿整個螢幕，並將背景設為黑色 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #000;
+        }
+        img {
+            /* 讓圖片保持長寬比填滿畫面 (多餘部分會被裁剪) */
+            width: 100vw;  /* 100% 視窗寬度 */
+            height: 100vh; /* 100% 視窗高度 */
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+
+    <img id="rolling-image" src="" alt="ResponseTime">
+
+    <script>
+        // 要輪播的圖片列表
+        const rollingImages = ['BlackS.png', 'WhiteS.png'];
+        let currentImageIndex = 0;
+        let switchCounter = 0;
+        const totalSwitches = 240; // 總共切換幾次
+
+        const imageElement = document.getElementById('rolling-image');
+
+        // 頁面載入時，執行初始化
+        function initialize() {
+            // 顯示第一張圖片
+            imageElement.src = rollingImages[currentImageIndex];
+            
+            // 觸發全螢幕 (保留了原始功能)
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) { /* Safari */
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { /* IE11 */
+                elem.msRequestFullscreen();
+            }
+
+            // --- 新增的程式碼開始 ---
+            // 監聽整個頁面的點擊事件
+            document.addEventListener('click', () => {
+                // 只要一點擊，就立刻跳轉到 ResponseTime.html
+                window.location.href = 'ResponseTime.html';
+            });
+            // --- 新增的程式碼結束 ---
+            
+            // 每隔1秒切換一次圖片 (原有功能)
+            const slideshowInterval = setInterval(() => {
+                // 如果切換次數已達上限，就準備返回
+                if (switchCounter >= totalSwitches) {
+                    clearInterval(slideshowInterval); // 停止輪播
+                    window.location.href = 'ResponseTime.html'; // 跳轉到 ResponseTime
+                    return; // 結束函式執行
+                }
+
+                // 切換到下一張圖片
+                currentImageIndex = (currentImageIndex + 1) % rollingImages.length;
+                imageElement.src = rollingImages[currentImageIndex];
+
+                switchCounter++; // 增加切換計數
+
+            }, 500); // 間隔1秒
+        }
+
+        // 頁面載入完成後，執行初始化
+        document.addEventListener('DOMContentLoaded', initialize);
+    </script>
+</body>
+</html>

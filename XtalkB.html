@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XtalkB.png</title>
+    <style>
+        /* 讓圖片填滿整個螢幕，並將背景設為黑色 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #000;
+        }
+        img {
+            /* 讓圖片保持長寬比填滿畫面 (多餘部分會被裁剪) */
+            width: 100vw;  /* 100% 視窗寬度 */
+            height: 100vh; /* 100% 視窗高度 */
+            object-fit: cover;
+            /* 讓滑鼠在圖片上顯示為可點擊的手指圖示 */
+            cursor: pointer;
+        }
+    </style>
+</head>
+<!-- 點擊頁面任何地方 (也就是點擊圖片) 會觸發返回 Crosstalk.html -->
+<body onclick="window.location.href = 'Crosstalk.html';">
+
+    <img src="XtalkB.png" alt="XtalkB">
+
+    <script>
+        // 當頁面載入後，自動執行這段程式碼
+        (function() {
+            const elem = document.documentElement; // 取得整個 <html> 元素
+
+            // --- 這是觸發全螢幕的核心 ---
+            // 檢查並呼叫瀏覽器支援的全螢幕方法
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) { /* Safari */
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { /* IE11 */
+                elem.msRequestFullscreen();
+            }
+        })();
+
+        // 監聽鍵盤事件，按任意鍵也可以返回 Crosstalk.html
+        document.addEventListener('keydown', function() {
+            window.location.href = 'Crosstalk.html';
+        });
+    </script>
+
+</body>
+</html>
