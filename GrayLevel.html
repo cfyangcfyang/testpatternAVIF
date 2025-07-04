@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>gamma.html</title>
+<style>
+  body {
+    background-color: #000;
+    margin: 0;
+    overflow: hidden;
+    color: #fff;
+    font-family: monospace;
+    font-size: 60px;
+  }
+  #brightness {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  #backLink {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+  }
+  a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 60px;
+  }
+</style>
+</head>
+<body>
+
+<div id="brightness">L0</div>
+<a id="backLink" href="Index.html">Back to Index page</a>
+
+<script>
+  let level = 0;
+  const brightnessDiv = document.getElementById('brightness');
+
+  function updateColor() {
+    const colorValue = `rgb(${level}, ${level}, ${level})`;
+    document.body.style.backgroundColor = colorValue;
+    brightnessDiv.textContent = `L${level}`;
+
+    if (level > 128) {
+        document.body.style.color = '#000';
+        document.getElementById('backLink').style.color = '#000';
+    } else {
+        document.body.style.color = '#fff';
+        document.getElementById('backLink').style.color = '#fff';
+    }
+  }
+
+  function handleInteraction() {
+    level++;
+    if (level > 255) {
+      level = 0;
+    }
+    updateColor();
+  }
+
+  document.addEventListener('click', handleInteraction);
+  document.addEventListener('keydown', handleInteraction);
+</script>
+
+</body>
+</html>
